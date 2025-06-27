@@ -1,11 +1,12 @@
 import { View, Text, FlatList, ActivityIndicator, StyleSheet } from 'react-native'
 import React, { useEffect, useState } from 'react'
 
-const nextpage = () => {
+export default function nextpage() {
 
     const URL = "https://reactnative.dev/movies.json";
     const [movies, setMovies] = useState();
     const [loading, setLoading] = useState(true);
+    const [refresh, setRefresh] = useState(false);
 
     const getMovies = async () =>{
 
@@ -23,6 +24,13 @@ const nextpage = () => {
             setLoading(false);
         }
 
+    }
+
+    const handleRefresh = () =>{
+
+      setRefresh(true);
+      getMovies();
+      setRefresh(false);
     }
 
     useEffect(()=>{getMovies();}, [])
@@ -43,6 +51,8 @@ const nextpage = () => {
                     <Text style={styles.year}>{item.releaseYear}</Text>
                 </View>
                 )}
+                refreshing = {refresh}
+                onRefresh={handleRefresh}
             />
             )}
         </View>
@@ -83,6 +93,3 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
 });
-
-
-export default nextpage
