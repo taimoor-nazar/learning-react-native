@@ -1,5 +1,6 @@
-import { View, Text, FlatList, ActivityIndicator, StyleSheet } from 'react-native'
+import { View, Text, FlatList, ActivityIndicator, StyleSheet, TouchableOpacity } from 'react-native'
 import React, { useEffect, useState } from 'react'
+import { useRouter } from 'expo-router';
 
 export default function nextpage() {
 
@@ -33,7 +34,14 @@ export default function nextpage() {
       setRefresh(false);
     }
 
+    const router = useRouter();
+
     useEffect(()=>{getMovies();}, [])
+
+    const handlePress = ()=>{
+
+      router.push('/page4');
+    }
 
     return (
         <View style={styles.container}>
@@ -55,11 +63,20 @@ export default function nextpage() {
                 onRefresh={handleRefresh}
             />
             )}
+
+            <View>
+              <TouchableOpacity onPress={handlePress} style = {styles.button}>
+                <Text style = {styles.buttonText}>Next Page</Text>
+              </TouchableOpacity>
+            </View>
         </View>
+
+        
     );
 }
 
 const styles = StyleSheet.create({
+
   container: {
     flex: 1,
     paddingTop: 50,
@@ -91,5 +108,20 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
+  },
+  button: {
+    position: 'absolute',
+    bottom: 20,
+    alignSelf: 'center',
+    backgroundColor: '#007bff',
+    paddingVertical: 14,
+    paddingHorizontal: 30,
+    borderRadius: 30,
+    elevation: 3,
+  },
+  buttonText: {
+    color: '#fff',
+    fontSize: 16,
+    fontWeight: '600',
   },
 });
